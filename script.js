@@ -24,24 +24,20 @@ function MovieSearch(mvname){
 		const poster=item.i.imageUrl;
 		const ry=item.i.rank;//Release Year
 		// const poster=item.i.imageUrl;
-		const movie=`<div class="SearchSuggestions">
-		<ul><li><h2>${name}</h2><img src="${poster}"height="250px" width="250px"><br>
-		<p class="release">Release Year :${ry}</p>
-		</li></ul>
+		// const movie=`<div class="SearchSuggestions">
+		// <ul><li><h2>${name}</h2><img src="${poster}"height="250px" width="250px"><br>
+		// <p class="release">Release Year :${ry}</p>
+		// </li></ul>
+		// </div>`
+		const mo=`
+		<div class="card">
+  			<h5 class="card-header">${name}</h5>
+ 			<div class="card-body">
+			 	<img src="${poster}"height="250px" width="250px">
+    			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    			<a href="#" class="btn btn-primary">Go somewhere</a>
+  			</div>
 		</div>`
-		const mo=`<div class="card text-center">
-		<div class="card-header">
-		${name}
-		</div>
-		<div class="card-body">
-		  <h5 class="card-title"><img src="${poster}height="250px" width="250px"></h5>
-		  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-		  <a href="#" class="btn btn-primary">Go somewhere</a>
-		</div>
-		<div class="card-footer text-muted">
-		  2 days ago
-		</div>
-	  </div>`
 		document.querySelector('.mv').innerHTML+=mo;
 	})
 })
