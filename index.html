@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #666;
+    }
+    
+  </style>
+</head>
+<body>
+  <ul class="nav justify-content-end">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Active</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">   
+      <div class="nav-link">
+        <label for="userInput">Enter Movie / Series Name :</label>
+        <input type="text" id="userInput">
+        <button onclick="processInput()">Search</button>
+      </div>
+    </li>
+  </ul>
+  <div class="movieSearch">           
+        <div class="mv">
+        </div>
+    </div>
+
+  <div id="dataContainer">
+
+  </div>
+
+  <script>
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhN2MwNWY2ZmNhZjc3NDFkMGUzYWFhMWZmMjBjY2IwMSIsInN1YiI6IjY1NzUyNzJjZTkzZTk1MDExZDRlNTE0MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wZHIZbGns0YV8cmV18_6soCeXjvMJIP7njw6sCnzUD8'
+      }
+    };
+
+    async function fetchData() {
+      try {
+        const response = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc', options);
+        const data = await response.json();
+        return data.results; // Assuming 'results' is an array of movies in the API response
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    async function displayDataOneByOne() {
+      const dataContainer = document.getElementById('dataContainer');
+      const apiData = await fetchData();
+
+      if (apiData) {
+        for (const movie of apiData) {
+          const movieContainer = document.createElement('div');
+          movieContainer.classList.add('movie-item'); // Add a class
+
+          const titleElement = document.createElement('h2');
+          titleElement.textContent = movie.title; // Adjust to display relevant movie data
+
+          const overviewElement = document.createElement('p');
+          overviewElement.textContent = movie.overview; // Adjust to display relevant movie data
+
+          const ReleaseDate = document.createElement('p');
+          ReleaseDate.textContent = movie.release_date; // Adjust to display relevant movie data
+
+          const posterElement = document.createElement('img');
+          posterElement.classList.add('movie-poster');
+          posterElement.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // Assuming 'poster_path' is part of your API response
+          
+
+          // Append the elements to the movieContainer
+          movieContainer.appendChild(titleElement);
+          movieContainer.appendChild(overviewElement);
+          movieContainer.appendChild(posterElement);
+          movieContainer.appendChild(ReleaseDate);
+
+          dataContainer.appendChild(movieContainer);
+
+          // You can add a delay between each movie if needed
+          await new Promise(resolve => setTimeout(resolve, 100)); // Adjust the delay in milliseconds
+        }
+      }
+    }
+
+    // Call the function to start displaying data
+    displayDataOneByOne();
+  </script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</body>
+</html>

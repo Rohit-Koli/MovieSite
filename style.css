@@ -1,0 +1,28 @@
+/* --Index Page Start-- */
+
+#dataContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .movie-item {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust the width as needed with margins */
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .movie-poster {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+/* --Index Page End-- */
