@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+    header("location:login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,39 +13,31 @@
   <title>Home</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Add your CSS styles here */
-    
-  </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.html">IMDB.COM</a>
+    <a class="navbar-brand" href="index.php">IMDB.COM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="movies.html">Movies <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="movies.php">Movies <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="TVShows.html">TV Shows</a>
+          <a class="nav-link" href="TVShows.php">TV Shows</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="profile.php">Profile</a>
         </li>
       </ul>
-      
-        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="userInput">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="processInput()">Search</button> -->
-        <!-- <label for="userInput">Enter Movie / Series Name :</label> -->
         <div class="search-bar">
           <input type="text" id="userInput" placeholder="Search Movie/Series">
           <button onclick="processInput()">Search</button> 
-        </div>       
-      
+        </div>          
     </div>
   </nav>
-    
-  </div>
   <div class="movieSearch"> 
         <div class="mv">
         
@@ -48,6 +47,7 @@
   <div id="dataContainer">
 
   </div>
+  <?php include'footer.php'?>
 
   <script>
     const options = {
@@ -62,7 +62,7 @@
       try {
         const response = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc', options);
         const data = await response.json();
-        return data.results; // Assuming 'results' is an array of movies in the API response
+        return data.results; 
       } catch (error) {
         console.error('Error:', error);
       }
@@ -75,23 +75,21 @@
       if (apiData) {
         for (const movie of apiData) {
           const movieContainer = document.createElement('div');
-          movieContainer.classList.add('movie-item'); // Add a class
+          movieContainer.classList.add('movie-item'); 
 
           const titleElement = document.createElement('h2');
-          titleElement.textContent = movie.title; // Adjust to display relevant movie data
+          titleElement.textContent = movie.title; 
 
           const overviewElement = document.createElement('p');
-          overviewElement.textContent = movie.overview; // Adjust to display relevant movie data
+          overviewElement.textContent = movie.overview;
 
           const ReleaseDate = document.createElement('p');
-          ReleaseDate.textContent = movie.release_date; // Adjust to display relevant movie data
+          ReleaseDate.textContent = movie.release_date;
 
           const posterElement = document.createElement('img');
           posterElement.classList.add('movie-poster');
-          posterElement.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // Assuming 'poster_path' is part of your API response
+          posterElement.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; 
           
-
-          // Append the elements to the movieContainer
           movieContainer.appendChild(titleElement);
           movieContainer.appendChild(overviewElement);
           movieContainer.appendChild(posterElement);
@@ -99,13 +97,11 @@
 
           dataContainer.appendChild(movieContainer);
 
-          // You can add a delay between each movie if needed
-          await new Promise(resolve => setTimeout(resolve, 100)); // Adjust the delay in milliseconds
+          await new Promise(resolve => setTimeout(resolve, 100)); 
         }
       }
     }
 
-    // Call the function to start displaying data
     displayDataOneByOne();
   </script>
   <script src="script.js"></script>

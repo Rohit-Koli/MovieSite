@@ -22,44 +22,21 @@ function MovieSearch(mvname){
 	list.map (item => {
 		const name=item.l;
 		const poster=item.i.imageUrl;
-		const ry=item.i.rank;//Release Year
-		// const poster=item.i.imageUrl;
-		// const movie=`<div class="SearchSuggestions">
-		// <ul><li><h2>${name}</h2><img src="${poster}"height="250px" width="250px"><br>
-		// <p class="release">Release Year :${ry}</p>
-		// </li></ul>
-		// </div>`
+		const ry=item.y;
+		const cast=item.s;
 		const mo=`
 		<div class="card">
   			<h5 class="card-header">${name}</h5>
  			<div class="card-body">
 			 	<img src="${poster}"height="250px" width="250px">
-    			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    			<a href="#" class="btn btn-primary">Go somewhere</a>
+    			<p class="card-text">${cast}</p>
+    			<p class="card-text">${ry}</p>
   			</div>
 		</div>`
 		document.querySelector('.mv').innerHTML+=mo;
 	})
 })
 }
-// fetch('https://imdb8.p.rapidapi.com/auto-complete?q=game%20of%20thr',{
-// 	"method": "GET",
-// 	"headers":{
-// 		'X-RapidAPI-Key': 'eaf7e6b7a9msh36e4405a34d08bdp197561jsnfa9b6d12ed54',
-// 		'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-// 	}
-// })
-// .then(response=>response.json())
-// .then(data=>{
-// 	const list=data.d;
-
-// 	list.map (item => {
-// 		const name=item.l;
-// 		const poster=item.i.imageUrl;
-// 		const movie=`<li><img src="${poster}"><h2>${name}</h2></li>`
-// 		document.querySelector('.mv').innerHTML+=movie;
-// 	})
-// })
 function movie(){
 	const options = {
 		method: 'GET',
